@@ -13,6 +13,23 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Products> Products { get; set; }
     public DbSet<Employees> Employees { get; set; }
 
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Employees>()
+            .HasOne(e => e.User)
+            .WithMany()
+            .HasForeignKey(e => e.UserId);
+
+        modelBuilder.Entity<Farmers>()
+        .HasOne(f => f.User)
+        .WithMany()
+        .HasForeignKey(f => f.UserId);
+
+
+    }
+
+
 }
 
