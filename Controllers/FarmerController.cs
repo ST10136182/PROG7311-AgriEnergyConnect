@@ -98,14 +98,14 @@ namespace Agri_Energy_Connect_Platform.Controllers
             }
         }
         //GET: FarmerController/AddProduct
-        public async Task<IActionResult> AddProduct()
+        public async Task<IActionResult> AddProductView()
         {
             return View();
         }
         //GET: FarmerController/AddProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddProduct(Products product)
+        public async Task<IActionResult> AddProductView(Products product)
         {
 
            if (ModelState.IsValid)
