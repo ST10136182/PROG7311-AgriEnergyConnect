@@ -28,6 +28,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
             return View();
         }
 
+        /* Commenting out the following methods
         // GET: FarmerController/Details/5
         public ActionResult Details(int id)
         {
@@ -97,6 +98,8 @@ namespace Agri_Energy_Connect_Platform.Controllers
                 return View();
             }
         }
+        */
+
         //GET: FarmerController/AddProduct
         public async Task<IActionResult> AddProductView()
         {
@@ -108,7 +111,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
         public async Task<IActionResult> AddProductView(Products product)
         {
 
-           if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var uuserId = _userManager.GetUserId(User);
                 var farmer = _context.Farmers.Where(f => f.UserId == uuserId).FirstOrDefault();
