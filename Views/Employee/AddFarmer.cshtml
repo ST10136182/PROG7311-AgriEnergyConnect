@@ -1,0 +1,41 @@
+﻿@model Agri_Energy_Connect_Platform.Models.Farmers
+
+@{
+    ViewData["Title"] = "Add Farmer";
+}
+
+<style>
+    body {
+        background-color: darkgreen;
+    }
+</style>
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Add a new Farmer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddFarmer" asp-controller="Employee">
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactNumber" class="control-label"></label>
+                <input asp-for="ContactNumber" class="form-control" />
+                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3"></div>
+            <div class="form-group">
+                <input type="submit" value="Add Farmer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

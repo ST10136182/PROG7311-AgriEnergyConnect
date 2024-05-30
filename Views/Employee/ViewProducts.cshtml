@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Agri_Energy_Connect_Platform.Models.Product>
+﻿@model IEnumerable<Agri_Energy_Connect_Platform.Models.Products>
 
 @{
     ViewData["Title"] = "View Products";
@@ -25,7 +25,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>ProductName</th>
             <th>Category</th>
             <th>Production Date</th>
         </tr>
@@ -34,7 +34,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
+                <td>@item.ProductName</td>
                 <td>@item.Category</td>
                 <td>@item.ProductionDate.ToShortDateString()</td>
             </tr>
