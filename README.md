@@ -3,7 +3,7 @@ Agri-Energy Connect Platform is a web application that connects farmers and empl
 # Setting Up the Development Environment
 1.	**Install Visual Studio:** Download and install Visual Studio from the official website. The Community version is free and sufficient for this project.
 2.	**Install .NET Core SDK:** Download and install the .NET Core SDK from the .NET download page.
-3.	**Clone the Repository:** Clone the project repository to your local machine using Git.
+3.	**Clone the Repository:** Clone the project repository to your local machine using Git. Repository link for this project: https://github.com/ST10136182/PROG7311-AgriEnergyConnect
 4.	**Open the Project:** Open the Agri-Energy Connect Platform.sln file in Visual Studio.
 5.	**Install NuGet Packages:** Right-click on the solution in the Solution Explorer and select "Restore NuGet Packages".
 6.  **Update the Connection String:** Open the appsettings.Development.json file and replace the DefaultConnection string in the ConnectionStrings section with your database connection string.
