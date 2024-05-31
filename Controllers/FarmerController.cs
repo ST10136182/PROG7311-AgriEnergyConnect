@@ -120,6 +120,9 @@ namespace Agri_Energy_Connect_Platform.Controllers
                     product.FarmersId = farmer.FarmersId;
                     _context.Products.Add(product);
                     await _context.SaveChangesAsync();
+
+                    TempData["Message"] = "Product added successfully.";
+
                     return RedirectToAction(nameof(Index));
                 }
             }

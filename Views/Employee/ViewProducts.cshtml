@@ -31,13 +31,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null)
         {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Category</td>
-                <td>@item.ProductionDate.ToShortDateString()</td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Category</td>
+                    <td>@item.ProductionDate.ToShortDateString()</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <p>No items to display</p>
         }
     </tbody>
 </table>
