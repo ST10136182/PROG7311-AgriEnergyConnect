@@ -27,6 +27,10 @@ public class ApplicationDbContext : IdentityDbContext
         .WithMany()
         .HasForeignKey(f => f.UserId);
 
+        modelBuilder.Entity<Products>()
+            .HasOne(p => p.Farmer)
+            .WithMany()
+            .HasForeignKey(p => p.FarmersId);
 
     }
 

@@ -1,5 +1,6 @@
 ﻿@model Agri_Energy_Connect_Platform.Models.Products
 
+
 @{
     ViewData["Title"] = "Add Product";
 }
@@ -10,7 +11,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="FarmerController" asp-action="AddProduct">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form asp-controller="Farmer" asp-action="AddProductView" method="post">
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
                 <input asp-for="ProductName" class="form-control" />
@@ -22,8 +24,9 @@
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
+
                 <label asp-for="ProductionDate" class="control-label"></label>
-                <input asp-for="ProductionDate" class="form-control" />
+                <input asp-for="ProductionDate"  class="form-control" />
                 <span asp-validation-for="ProductionDate" class="text-danger"></span>
             </div>
             <div class="mb-3"></div>
@@ -32,6 +35,8 @@
             </div>
             
         </form>
+        <div class="mb-3"></div>
+        <a href="@Url.Action("FarmerIndex", "Farmer")" class="btn btn-primary">Back to Farmer Hub</a>
     </div>
     
 </div>

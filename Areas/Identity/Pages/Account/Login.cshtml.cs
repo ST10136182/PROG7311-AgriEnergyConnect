@@ -21,11 +21,13 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
       
@@ -56,6 +58,10 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
            
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -79,16 +85,33 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            
-
             if (ModelState.IsValid)
             {
-                
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    // Get the logged-in user
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                    // Check if the user is in the selected role
+                    if (await _userManager.IsInRoleAsync(user, Input.Role))
+                    {
+                        if (Input.Role == "Farmer")
+                        {
+                            return RedirectToAction("FarmerIndex", "Farmer");
+                        }
+                        else if (Input.Role == "Employee")
+                        {
+                            return RedirectToAction("EmployeeIndex", "Employee");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid role selected.");
+                        return Page();
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -109,5 +132,6 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }

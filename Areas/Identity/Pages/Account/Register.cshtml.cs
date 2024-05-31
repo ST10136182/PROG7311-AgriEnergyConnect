@@ -24,6 +24,7 @@ using Microsoft.Extensions.Logging;
 using Agri_Energy_Connect_Platform.Data;
 
 
+
 namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -88,9 +89,7 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
             [Display(Name = "Position")]
             public string Position { get; set; }
 
-            [Required]
-            [Display(Name = "Role")]
-            public string Role { get; set; }
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -99,7 +98,7 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(EmployeeViewModel model,string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -107,30 +106,29 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    
 
-                    if (Input.Role == "Employee")
-                    {
+                    
                         // Save additional employee data
                         var employee = new Employees
                         {
-                            FullName = Input.Email,
-                            ContactNumber = Input.ContactNumber,
-                            Position = Input.Position,
+                            FullName = model.Email,
+                            ContactNumber = model.ContactNumber,
+                            Position = model.Position,
                             UserId = user.Id,
 
                         };
                         _context.Employees.Add(employee);
                         await _context.SaveChangesAsync();
-                    }
+                    
 
-                    await _userManager.AddToRoleAsync(user, Input.Role);
+                    
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -146,15 +144,17 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
 
 
 
+                    // If successful, sign in the user and redirect to the EmployeeIndex view
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = Url.Action("Index", "Employee") });
                     }
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return RedirectToAction("Index", "Employee");
                     }
+
                 }
                 foreach (var error in result.Errors)
                 {
@@ -173,9 +173,7 @@ namespace Agri_Energy_Connect_Platform.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'");
             }
         }
 

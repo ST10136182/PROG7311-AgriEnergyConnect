@@ -19,6 +19,22 @@
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+            
+            <div class="form-floating mb-3">
+            <input asp-for="Input.FullName" class="form-control" autocomplete="off" aria-required="true" placeholder="Full Name" />
+            <label asp-for="Input.FullName">Full Name</label>
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ContactNumber" class="form-control" autocomplete="off" aria-required="true" placeholder="Contact Number" />
+                <label asp-for="Input.ContactNumber">Contact Number</label>
+                <span asp-validation-for="Input.ContactNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Position" class="form-control" autocomplete="off" aria-required="true" placeholder="Position" />
+                <label asp-for="Input.Position">Position</label>
+                <span asp-validation-for="Input.Position" class="text-danger"></span>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>
@@ -29,20 +45,12 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-    <div class="form-floating mb-3">
-                <label asp-for="Input.Role"></label>
-                <select asp-for="Input.Role" class="form-control">
-                    <option value="Farmer">Farmer</option>
-                    <option value="Employee">Employee</option>
-                </select>
-                <span asp-validation-for="Input.Role" class="text-danger"></span>
-            </div>
 
             <div class="mb-3"></div>
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
     
-
+    
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

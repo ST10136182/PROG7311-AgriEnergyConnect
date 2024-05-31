@@ -7,10 +7,11 @@ using System.Linq;
 using Agri_Energy_Connect_Platform.Models;
 using Agri_Energy_Connect_Platform.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agri_Energy_Connect_Platform.Controllers
 {
-    //[Authorize(Roles = "Farmer")]
+    [Authorize(Roles = "Farmer")]
     public class FarmerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,104 +29,54 @@ namespace Agri_Energy_Connect_Platform.Controllers
             return View();
         }
 
-        /* Commenting out the following methods
-        // GET: FarmerController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: FarmerController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: FarmerController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: FarmerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: FarmerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: FarmerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: FarmerController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        */
+        
 
         //GET: FarmerController/AddProduct
         public async Task<IActionResult> AddProductView()
         {
             return View();
         }
-        //GET: FarmerController/AddProduct
+        //POST: FarmerController/AddProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProductView(Products product)
         {
-
             if (ModelState.IsValid)
             {
-                var uuserId = _userManager.GetUserId(User);
-                var farmer = _context.Farmers.Where(f => f.UserId == uuserId).FirstOrDefault();
-                if (farmer != null)
+                try
                 {
-                    product.FarmersId = farmer.FarmersId;
-                    _context.Products.Add(product);
-                    await _context.SaveChangesAsync();
+                    var userId = _userManager.GetUserId(User);
+                    var farmer = await _context.Farmers.Include(f => f.Products).FirstOrDefaultAsync(f => f.UserId == userId);
 
-                    TempData["Message"] = "Product added successfully.";
+                    if (farmer != null)
+                    {
+                        product.FarmersId = farmer.FarmersId;
+                        farmer.Products.Add(product); // Add product via navigation property
 
-                    return RedirectToAction(nameof(Index));
+                        await _context.SaveChangesAsync();
+
+                        TempData["Message"] = "Product added successfully.";
+                        return RedirectToAction(nameof(FarmerIndex));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Farmer not found.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the error
+                    Console.WriteLine(ex.Message);
+                    ModelState.AddModelError("", "An error occurred while saving to the database.");
                 }
             }
+
+            // Log ModelState errors for debugging
+            foreach (var state in ModelState)
+            {
+                Console.WriteLine($"Key: {state.Key}, Error: {state.Value.Errors.FirstOrDefault()?.ErrorMessage}");
+            }
+
             return View(product);
         }
     }
