@@ -1,4 +1,4 @@
-#Introduction
+*Introduction
 Agri-Energy Connect Platform is a web application that connects farmers and employees in the agricultural energy sector. It allows farmers to add and manage their products, and employees to view and manage these products.
 #Setting Up the Development Environment
 1.	Install Visual Studio: Download and install Visual Studio from the official website. The Community version is free and sufficient for this project.
