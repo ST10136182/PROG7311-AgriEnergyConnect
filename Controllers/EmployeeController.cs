@@ -46,7 +46,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
                 try
                 {
                     // Create a new IdentityUser
-                    var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                    var user = new IdentityUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true }; //bypass email confirmation for development purposes
                     // Create the user and assign the password
                     var result = await _userManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)

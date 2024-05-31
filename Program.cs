@@ -74,6 +74,7 @@ async Task CreateRoles(IServiceProvider serviceProvider)
     }
 }
 
+//Method to seed database
 static async Task SeedDatabase(IServiceProvider serviceProvider)
 {
     var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
