@@ -74,7 +74,7 @@ async Task CreateRoles(IServiceProvider serviceProvider)
     }
 }
 
- static async Task SeedDatabase(IServiceProvider serviceProvider)
+static async Task SeedDatabase(IServiceProvider serviceProvider)
 {
     var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
@@ -85,6 +85,36 @@ async Task CreateRoles(IServiceProvider serviceProvider)
     if (employeeResult.Succeeded)
     {
         await userManager.AddToRoleAsync(employeeUser, "Employee");
+
+        // Add employee profile
+        var employee = new Employees
+        {
+            FullName = "Demo Employee",
+            ContactNumber = "0987654321",
+            Position = "Employee Position",
+            UserId = employeeUser.Id
+        };
+        context.Employees.Add(employee);
+        await context.SaveChangesAsync();
+    }
+
+    // Add another employee user
+    var employeeUser2 = new IdentityUser { UserName = "employee2@demo.com", Email = "employee2@demo.com", EmailConfirmed = true };
+    var employeeResult2 = await userManager.CreateAsync(employeeUser2, "Employee123!");
+    if (employeeResult2.Succeeded)
+    {
+        await userManager.AddToRoleAsync(employeeUser2, "Employee");
+
+        // Add employee profile
+        var employee2 = new Employees
+        {
+            FullName = "Demo Employee 2",
+            ContactNumber = "9876543210",
+            Position = "Employee Position 2",
+            UserId = employeeUser2.Id
+        };
+        context.Employees.Add(employee2);
+        await context.SaveChangesAsync();
     }
 
     // Add farmer user
@@ -107,24 +137,41 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 
         // Add products for the farmer
         var products = new List<Products>
-            {
-                new Products { ProductName = "Apples", Category = "Fruit", ProductionDate = DateTime.Now.AddDays(-10), FarmersId = farmer.FarmersId },
-                new Products { ProductName = "Carrots", Category = "Vegetable", ProductionDate = DateTime.Now.AddDays(-20), FarmersId = farmer.FarmersId }
-            };
+               {
+                   new Products { ProductName = "Apples", Category = "Fruit", ProductionDate = DateTime.Now.AddDays(-10), FarmersId = farmer.FarmersId },
+                   new Products { ProductName = "Carrots", Category = "Vegetable", ProductionDate = DateTime.Now.AddDays(-20), FarmersId = farmer.FarmersId }
+               };
         context.Products.AddRange(products);
         await context.SaveChangesAsync();
     }
 
-    // Add employee profile
-    var employee = new Employees
+    // Add another farmer user
+    var farmerUser2 = new IdentityUser { UserName = "farmer2@demo.com", Email = "farmer2@demo.com", EmailConfirmed = true };
+    var farmerResult2 = await userManager.CreateAsync(farmerUser2, "Farmer123!");
+    if (farmerResult2.Succeeded)
     {
-        FullName = "Demo Employee",
-        ContactNumber = "0987654321",
-        Position = "Employee Position",
-        UserId = employeeUser.Id
-    };
-    context.Employees.Add(employee);
-    await context.SaveChangesAsync();
+        await userManager.AddToRoleAsync(farmerUser2, "Farmer");
+
+        // Add farmer profile
+        var farmer2 = new Farmers
+        {
+            FullName = "Demo Farmer 2",
+            ContactNumber = "9876543210",
+            Address = "Demo Address 2",
+            UserId = farmerUser2.Id
+        };
+        context.Farmers.Add(farmer2);
+        await context.SaveChangesAsync();
+
+        // Add products for the farmer
+        var products2 = new List<Products>
+               {
+                   new Products { ProductName = "Oranges", Category = "Fruit", ProductionDate = DateTime.Now.AddDays(-5), FarmersId = farmer2.FarmersId },
+                   new Products { ProductName = "Tomatoes", Category = "Vegetable", ProductionDate = DateTime.Now.AddDays(-15), FarmersId = farmer2.FarmersId }
+               };
+        context.Products.AddRange(products2);
+        await context.SaveChangesAsync();
+    }
 }
 
 

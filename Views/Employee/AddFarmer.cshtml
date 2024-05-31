@@ -1,14 +1,8 @@
-﻿@model Agri_Energy_Connect_Platform.Models.Farmers
+﻿@model Agri_Energy_Connect_Platform.Models.FarmerViewModel
 
 @{
     ViewData["Title"] = "Add Farmer";
 }
-
-<style>
-    body {
-        background-color: darkgreen;
-    }
-</style>
 
 <h1>@ViewData["Title"]</h1>
 
@@ -16,6 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form asp-action="AddFarmer" asp-controller="Employee">
             <div class="form-group">
                 <label asp-for="FullName" class="control-label"></label>
@@ -31,6 +26,16 @@
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="mb-3"></div>
             <div class="form-group">

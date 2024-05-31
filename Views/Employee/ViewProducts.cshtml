@@ -6,7 +6,11 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-action="ViewProducts" method="post">
+<form asp-controller="Employee" asp-action="ViewProducts" method="post">
+    <div class="form-group">
+        <label for="farmersId">Farmer:</label>
+        <select id="farmersId" name="farmersId" asp-items="ViewBag.Farmers" class="form-control"></select>
+    </div>
     <div class="form-group">
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" name="startDate" class="form-control" />
@@ -19,8 +23,10 @@
         <label for="category">Category:</label>
         <input type="text" id="category" name="category" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
+
+
 
 <table class="table">
     <thead>

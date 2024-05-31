@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Farmer Hub";
+}
+
+<h2>Farmers Hub</h2>
+<p>Welcome to the farmers hub! Please click below to add products to your profile:</p>
+
+<!-- Button to navigate to the Add Product view -->
+<div>
+    <form asp-controller="Farmer" asp-action="AddProductView" style="display: inline-block; margin-right: 10px;">
+        <input type="submit" value="Add a Product" class="btn btn-primary" />
+    </form>
+</div>
+
+

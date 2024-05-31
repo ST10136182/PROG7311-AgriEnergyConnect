@@ -23,7 +23,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
         }
 
         // GET: FarmerController
-        public ActionResult Index()
+        public ActionResult FarmerIndex()
         {
             return View();
         }
