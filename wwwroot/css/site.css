@@ -1,22 +1,137 @@
+/* Base font size */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
+/* Focus styles */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+/* Ensure the body covers the viewport height */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #f9f9f9; /* Light background color */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Darker text color for better contrast */
 }
+
+/* Green Theme Colors */
+:root {
+    --primary-color: #4caf50; /* Primary green */
+    --secondary-color: #388e3c; /* Darker green */
+    --accent-color: #c8e6c9; /* Light green */
+    --light-bg-color: #e8f5e9; /* Very light green background */
+    --text-color: #ffffff; /* Text color on dark backgrounds */
+}
+
+/* Body Styling */
+body {
+    background-color: var(--light-bg-color);
+    color: #333;
+}
+
+/* Header Styling */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+}
+
+/* Button Styling */
+.btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+}
+
+    .btn:hover, .btn:focus, .btn:active {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+
+/* Form Styling */
+.form-control {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.1rem var(--accent-color);
+    }
+
+/* Link Styling */
+a {
+    color: var(--primary-color);
+}
+
+    a:hover, a:focus {
+        color: var(--secondary-color);
+    }
+
+/* Navbar Styling */
+.navbar {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+    .navbar .nav-link {
+        color: var(--text-color);
+    }
+
+        .navbar .nav-link:hover, .navbar .nav-link:focus {
+            color: var(--accent-color);
+        }
+
+/* Footer Styling */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* General Styling for Containers */
+.container {
+    background-color: var(--text-color);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+/* Home Banner Styling */
+.home-banner {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+    .home-banner img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
